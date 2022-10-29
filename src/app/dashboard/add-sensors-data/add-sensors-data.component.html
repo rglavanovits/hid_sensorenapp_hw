@@ -1,0 +1,28 @@
+<app-button color="{{ showAddTask ? 'red' : 'green' }}" text="{{ showAddTask ? 'Close' : 'Add' }}"
+  (btnClick)="toggleAddTask()"></app-button>
+<form style="display: flex; flex-direction: column;" [formGroup]="sensorenDataForm" (ngSubmit)="onSubmit()" *ngIf="showAddTask">
+  <h2>Neuen Messwert hinzufügen</h2>
+  <mat-form-field appearance="fill">
+    <mat-label>Sensor</mat-label>
+    <mat-select formControlName="sensorId">
+      <mat-option value="" disabled>Bitte Sensor auswählen</mat-option>
+      <mat-option *ngFor="let item of storeService.sensoren" [value]="item.id">{{item?.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <input matInput placeholder="Datum" type="date" name="datum" formControlName="date">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Temperatur</mat-label>
+    <input matInput placeholder="Temperatur" type="number" name="Temperatur" formControlName="temperature">
+    <mat-error>Wert außerhalb des gültigen Bereichs! (-20 - 45)</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Luftfeuchtigkeit</mat-label>
+    <input matInput placeholder="Luftfeuchtigkeit" type="number" name="Luftfeutigkeit" formControlName="humidity">
+    <mat-error>Wert außerhalb des gültigen Bereichs! (0 - 100)</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">
+    Erfassen
+  </button>
+</form>
